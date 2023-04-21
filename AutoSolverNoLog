@@ -139,4 +139,3 @@ local function hookgamemenu(child)
 end
 hookgamemenu(LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("GameMenus"))
 LocalPlayer:WaitForChild("PlayerGui").ChildAdded:Connect(hookgamemenu)
-logging.info("Waiting for robbery")
