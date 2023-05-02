@@ -1,9 +1,4 @@
-local color  
- rainbowColor = function()
-    while wait() do
-     return Color3.fromHSV(tick() % 5/5, 1, 1) 
-    end
-end
+
   
 -- Services
 
@@ -62,15 +57,11 @@ function ESP:Add(object, settings)
 
     local displayLabel = Drawing.new("Text")
     local tracer = Drawing.new("Line")
-    game:GetService('RunService').RenderStepped:connect(function()
 
-if ESP.settings.rainbow then 
-    color = rainbowColor()
-else 
-    color = settings.color 
 
- end 
-end)
+    local color = settings.color or (objectIsPlayer(object) and object.Team) and object.TeamColor.Color or Color3.fromRGB(255, 255, 255)
+
+
     displayLabel.Center = true
     displayLabel.Outline = true
     displayLabel.Color = color
