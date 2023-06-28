@@ -11,7 +11,6 @@
     
     Please do not modify this script without my permission, or redistribute it without any credit to me.
 ]]
-local VirtualInputManager = game:GetService("VirtualInputManager")
 
 -- Do not touch the code below this line
 local Players = game:GetService("Players"); local LocalPlayer = Players.LocalPlayer; local ReplicatedStorage = game:GetService("ReplicatedStorage"); local RunService = game:GetService("RunService");
@@ -30,22 +29,21 @@ local function hookgamemenu(child)
             local CycleFrame = HackingUI:WaitForChild("CycleFrame")
             local SelectingCodeTextLabel = HackingUI:WaitForChild("SelectingCode")
 
-         
+            local function MoveCursorToCenter()
+                local ScreenSize = GameMenu.AbsoluteSize
+                local X = math.floor(ScreenSize.X / 2)
+                local Y = math.floor(ScreenSize.Y / 2)
+
+                mousemoveabs(X,Y)
+            end
             -- Listen for ATM hack start
             CycleFrame.DescendantAdded:Connect(function( NewDescendant )
                 local success, message = pcall(function()
                     if NewDescendant:IsA("TextLabel") then
                         NewDescendant:GetPropertyChangedSignal("BackgroundColor3"):Connect(function()
                             if NewDescendant.Text == SelectingCodeTextLabel.Text and NewDescendant.BackgroundColor3 ~= Color3.fromRGB(0,0,0) then
-
-VirtualInputManager:SendMouseButtonEvent(
-    1300, --X Position
-   700, --Y Position
-    0, --0 = Left click, 1 = Right click, 2 = Scroll wheel
-    true, --true = simulate mouse press, false = simulate mouse release
-    game, --layer collector (idk)
-    1 -- repeats 0 times
-)
+                                MoveCursorToCenter()
+                                mouse1click()
                             end
                         end)
                     end
@@ -53,6 +51,8 @@ VirtualInputManager:SendMouseButtonEvent(
                 if not success then
                 end
             end)
-            
+        end 
+    end)
+end
 hookgamemenu(LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("GameMenus"))
 LocalPlayer:WaitForChild("PlayerGui").ChildAdded:Connect(hookgamemenu)
